@@ -1,8 +1,24 @@
 package repo_api
 
-type Repo struct {
+type RepoBasic interface {
+	GetBasicToken()
+	CreateBasicToken()
 }
 
-func NewRepo() *Repo {
-	return &Repo{}
+type Repo struct {
+	repo RepoBasic
+}
+
+func NewRepo(repo RepoBasic) *Repo {
+	return &Repo{
+		repo: repo,
+	}
+}
+
+func (r *Repo) GetToken() {
+	r.repo.GetBasicToken()
+}
+
+func (r *Repo) CreateToken() {
+	r.repo.CreateBasicToken()
 }

@@ -1,17 +1,16 @@
 package delivery_api
 
 import (
+	"context"
+	"menti/pkg/types"
+
 	"github.com/gofiber/fiber/v2"
 )
 
 type Service interface {
 	ConcateLogic(a, b int) int
-}
-
-type BasicAuth interface {
-}
-
-type JWTAuth interface {
+	MiddleWareBasic(ctx context.Context, credentials string) error
+	MiddleWareJWT(ctx context.Context, credentials string) error
 }
 
 type Handler struct {
@@ -26,6 +25,7 @@ func NewHandlers(service Service) *Handler {
 	}
 
 	h.app.Get("api/concate", h.Concate)
+	h.app.Post("api/register", h.RegisterUser)
 
 	return h
 }
@@ -37,12 +37,23 @@ func (h *Handler) Concate(c *fiber.Ctx) error {
 	return c.JSON(response)
 }
 
-func (h *Handler) BasicAuthorization() {
-
+func (h *Handler) RegisterUser(c *fiber.Ctx) error {
+	return nil
 }
 
-func (h *Handler) JWTAuthorization() {
+func (h *Handler) BasicAuthorization(c *fiber.Ctx) error {
+	token := ""
+	if err := h.service.MiddleWareBasic(c.Context(), token); err != nil {
+		return c.Status(403).JSON(types.ResponseError{"error": err.Error()})
+	}
+	return c.Next()
+}
 
+func (h *Handler) JWTAuthorization(c *fiber.Ctx) error {
+	if err := h.service.MiddleWareJWT(c.Context(), "orel"); err != nil {
+		return c.Status(403).JSON(types.ResponseError{"error": err.Error()})
+	}
+	return c.Next()
 }
 
 func (h *Handler) Listen(host string) error {

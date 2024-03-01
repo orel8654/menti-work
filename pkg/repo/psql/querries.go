@@ -17,7 +17,7 @@ func NewRepo(db sqlx.DB) *Repo {
 	}
 }
 
-func (r *Repo) CreateUser(ctx context.Context, user types.User) error {
+func (r *Repo) CreateUser(ctx context.Context, user types.UserPayload) error {
 	querry := `
 		INSERT INTO user (uuid, password, username)
 		VALUES (:uuid, :password, :username)

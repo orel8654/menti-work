@@ -10,6 +10,7 @@ import (
 	service_api "menti/src/api/internal/service"
 
 	"github.com/jmoiron/sqlx"
+	_ "github.com/lib/pq"
 )
 
 func main() {
@@ -19,7 +20,7 @@ func main() {
 }
 
 func run(host string) error {
-	conf, err := config.Config("../configs/database.yaml")
+	conf, err := config.Config("../../../configs/database.yaml")
 	if err != nil {
 		return err
 	}

@@ -6,7 +6,7 @@ import (
 )
 
 type RepoBasic interface {
-	CreateUser(ctx context.Context, user types.UserPayload) error
+	CreateUser(ctx context.Context, user types.UserPayloadCreat) error
 	GetUser(ctx context.Context, username string) (res types.User, err error)
 	GetBasicToken()
 	CreateBasicToken()
@@ -22,8 +22,8 @@ func NewRepo(repo RepoBasic) *Repo {
 	}
 }
 
-func (r *Repo) CreateUser(ctx context.Context, data types.UserPayload) error {
-	if err := r.repo.CreateUser(ctx, types.UserPayload{}); err != nil {
+func (r *Repo) CreateUser(ctx context.Context, data types.UserPayloadCreat) error {
+	if err := r.repo.CreateUser(ctx, data); err != nil {
 		return err
 	}
 	return nil

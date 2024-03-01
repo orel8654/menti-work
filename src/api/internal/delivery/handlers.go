@@ -11,6 +11,7 @@ type Service interface {
 	ConcateLogic(a, b int) int
 	MiddleWareBasic(ctx context.Context, credentials string) error
 	MiddleWareJWT(ctx context.Context, credentials string) error
+	RegisterUserService(ctx context.Context, credentials types.UserPayload) error
 }
 
 type Handler struct {
@@ -38,6 +39,13 @@ func (h *Handler) Concate(c *fiber.Ctx) error {
 }
 
 func (h *Handler) RegisterUser(c *fiber.Ctx) error {
+	data := new(types.UserPayload)
+	if err := c.BodyParser(&data); err != nil {
+		return c.Status(400).JSON(types.ResponseError{"error": err.Error()})
+	}
+	if err := h.service.RegisterUserService(c.Context(), *data); err != nil {
+		return c.Status(500).JSON(types.ResponseError{"error": err.Error()})
+	}
 	return nil
 }
 

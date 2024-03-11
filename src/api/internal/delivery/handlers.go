@@ -29,10 +29,10 @@ func NewHandlers(service Service) *Handler {
 	}
 
 	h.app.Post("api/register", h.RegisterUser)
-	h.app.Post("api/login", h.LoginUser)
-	h.app.Post("api/v1/login", h.LoginUserByBasic)
-	h.app.Post("api/v2/login", h.LoginUserByBearer)
-	h.app.Get("api/v1/test", h.AuthMiddleware, h.TestFunc)
+	h.app.Post("api/login", h.LoginUser) //авторизация post
+	h.app.Post("api/v1/login", h.LoginUserByBasic) //авторизация basic token
+	h.app.Post("api/v2/login", h.LoginUserByBearer) //авторизация bearer token
+	h.app.Get("api/v1/test", h.AuthMiddleware, h.TestFunc) //middleware для basic и bearer
 
 	return h
 }

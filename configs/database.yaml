@@ -1,0 +1,5 @@
+host: "95.163.229.183"
+port: "5432"
+user: "admin"
+password: "admin"
+dbname: "general"

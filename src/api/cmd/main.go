@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"menti/pkg/config"
-	psql_pkg "menti/pkg/repo/psql"
 	delivery_api "menti/src/api/internal/delivery"
 	repo_api "menti/src/api/internal/repo"
 	service_api "menti/src/api/internal/service"
@@ -29,8 +28,7 @@ func run(host string) error {
 	if err != nil {
 		return err
 	}
-	repoPkg := psql_pkg.NewRepo(*db)
-	repoBasic := repo_api.NewRepo(repoPkg)
+	repoBasic := repo_api.NewRepo(*db)
 	service := service_api.NewService(repoBasic)
 	handler := delivery_api.NewHandlers(service)
 	return handler.Listen(host)

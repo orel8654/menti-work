@@ -18,4 +18,11 @@ type User struct {
 	Username string `db:"username"`
 }
 
+type UserToken struct {
+	Token string `json:"token" db:"token"`
+	IDKey int `json:"id_key" db:"id_key"`
+}
+
 type ResponseError map[string]string
+
+type ResponseLogin map[string]string

@@ -120,7 +120,7 @@ func VerifyJWTToken(data string) (username string, err error) {
 	}
 	claims, ok := token.Claims.(*Claims)
 	if !ok || !claims.VerifyExpiresAt(time.Now().Unix(), true) {
-		return username, errors.New("token has expire")
+		return username, errors.New("token has expired")
 	}
 	return claims.Username, err
 }

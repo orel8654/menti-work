@@ -27,19 +27,19 @@ func NewHandlers() *Handler {
 }
 
 func (h *Handler) Login(c *fiber.Ctx) error {
-	filePath := "../../../pkg/templates/auth/login.html"
+	filePath := "./pkg/templates/auth/login.html"
 	return c.SendFile(filePath)
 }
 
 func (h *Handler) StaticCSS(c *fiber.Ctx) error {
 	fileName := c.Params("filename")
-	filePath := fmt.Sprintf("../../../pkg/static/css/%s", fileName)
+	filePath := fmt.Sprintf("./pkg/static/css/%s", fileName)
 	return c.SendFile(filePath)
 }
 
 func (h *Handler) StaticJS(c *fiber.Ctx) error{
 	fileName := c.Params("filename")
-	filePath := fmt.Sprintf("../../../pkg/static/js/%s", fileName)
+	filePath := fmt.Sprintf("./pkg/static/js/%s", fileName)
 	return c.SendFile(filePath)
 }
 
